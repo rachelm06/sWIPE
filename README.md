@@ -1,4 +1,4 @@
-# swipe
+# s-WIPE
 
 A new Flutter project.
 
