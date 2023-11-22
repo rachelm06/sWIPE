@@ -46,7 +46,7 @@ class _ToiletSwiperState extends State<ToiletSwiper> {
       context: context,
       builder: (context) => AlertDialog(
         title: Text(toilet.location),
-        content: Text(toilet.review),
+        content: Text('Address: ' + toilet.address + '\n' + toilet.review),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -117,7 +117,7 @@ class _ToiletSwiperState extends State<ToiletSwiper> {
           );
         },
         itemCount: Toilet.toilets.length,
-        itemWidth: MediaQuery.of(context).size.width - 2 * 64,
+        itemWidth: MediaQuery.of(context).size.width - 60,
         layout: SwiperLayout.STACK,
       ),
       floatingActionButton: FloatingActionButton(
@@ -132,8 +132,8 @@ class HeartIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: MediaQuery.of(context).size.height / 2 - 25,
-      left: MediaQuery.of(context).size.width / 2 - 25,
+      top: MediaQuery.of(context).size.height,
+      left: MediaQuery.of(context).size.width,
       child: AnimatedOpacity(
         opacity: 1.0,
         duration: Duration(milliseconds: 500),
@@ -155,10 +155,8 @@ class ToiletCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+        padding: const EdgeInsets.only(top: 30, bottom: 40),
         child: SizedBox(
-            height: MediaQuery.of(context).size.height / 10, // Adjusted height
-            width: MediaQuery.of(context).size.width - 40,// This might need adjustment
             child: Stack(children: [
                 Container(
                     decoration: BoxDecoration(
@@ -209,10 +207,7 @@ class ToiletCard extends StatelessWidget {
                                 ),
                             ],
                         ),
-                    ), Text('${toilet.address}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,))
+                    ), 
                     ]
                     )
                 )
