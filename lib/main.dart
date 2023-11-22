@@ -17,9 +17,9 @@ class Swipe extends StatelessWidget {
         appBarTheme: AppBarTheme(
           color: Color.fromARGB(200, 239,74,117), // Your AppBar background color
           titleTextStyle: TextStyle(
-            color: Colors.white, // Set the AppBar title text color to white
-            fontSize: 20, // You can adjust the font size as needed
-            fontWeight: FontWeight.bold, // Optional: add font weight if you like
+            color: Colors.white, 
+            fontSize: 20, 
+            fontWeight: FontWeight.bold,
           ),
         ),
         useMaterial3: true,
