@@ -15,7 +15,7 @@ class Swipe extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         appBarTheme: AppBarTheme(
-          color: Color.fromARGB(200, 239,74,117), // Your AppBar background color
+          color: Color.fromARGB(200, 239,74,117),
           titleTextStyle: TextStyle(
             color: Colors.white, 
             fontSize: 20, 
