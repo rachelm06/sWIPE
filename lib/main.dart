@@ -15,7 +15,7 @@ class Swipe extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         appBarTheme: AppBarTheme(
-          color: Colors.green, // Your AppBar background color
+          color: Color.fromARGB(200, 239,74,117), // Your AppBar background color
           titleTextStyle: TextStyle(
             color: Colors.white, // Set the AppBar title text color to white
             fontSize: 20, // You can adjust the font size as needed
@@ -31,13 +31,15 @@ class Swipe extends StatelessWidget {
 
 class ToiletSwiper extends StatefulWidget {
   const ToiletSwiper({super.key});
-
+  
   @override
   _ToiletSwiperState createState() => _ToiletSwiperState();
 }
 
 class _ToiletSwiperState extends State<ToiletSwiper> {
   final List<Toilet> favorites = [];
+  bool showHeart = false;
+
 
   void showDetails(Toilet toilet) {
     showDialog(
@@ -98,9 +100,20 @@ class _ToiletSwiperState extends State<ToiletSwiper> {
           final toilet = Toilet.toilets[index];
           return GestureDetector(
             onTap: () => showDetails(toilet),
-            onDoubleTap: () => addToFavorites(toilet),
+            onDoubleTap: () =>  {
+        addToFavorites(toilet),
+        setState(() {
+          showHeart = true;
+        }),
+        
+        Future.delayed(Duration(milliseconds: 500), () {
+          setState(() {
+            showHeart = false;
+          });
+        })
+      },
             onLongPress: () => showRating(toilet),
-            child: ToiletCard(toilet: toilet),
+            child: ToiletCard(toilet: toilet), 
           );
         },
         itemCount: Toilet.toilets.length,
@@ -110,6 +123,25 @@ class _ToiletSwiperState extends State<ToiletSwiper> {
       floatingActionButton: FloatingActionButton(
         onPressed: navigateToFavorites,
         child: const Icon(Icons.favorite),
+      ),
+    );
+  }
+}
+
+class HeartIcon extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: MediaQuery.of(context).size.height / 2 - 25,
+      left: MediaQuery.of(context).size.width / 2 - 25,
+      child: AnimatedOpacity(
+        opacity: 1.0,
+        duration: Duration(milliseconds: 500),
+        child: Icon(
+          Icons.favorite,
+          color: Colors.red,
+          size: 50,
+        ),
       ),
     );
   }
@@ -157,7 +189,9 @@ class ToiletCard extends StatelessWidget {
                 Positioned(
                     bottom: 30,
                     left: 30,
-                    child: Text(
+                    child: Column (
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [ Text(
                         '${toilet.location}',
                         style: const TextStyle(
                             color: Colors.white,
@@ -175,7 +209,12 @@ class ToiletCard extends StatelessWidget {
                                 ),
                             ],
                         ),
-                    ),
+                    ), Text('${toilet.address}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,))
+                    ]
+                    )
                 )
             ]),
         ),
@@ -189,12 +228,14 @@ class Toilet {
   final double rating;
   final String location;
   final String review;
+  final String address;
 
   Toilet({
     required this.imageURL,
     required this.rating,
     required this.location,
     required this.review,
+    required this.address
   });
 
   static List<Toilet> toilets = [
@@ -203,13 +244,30 @@ class Toilet {
       rating: 4.2,
       location: 'Downtown Cafe',
       review: 'Clean and well-maintained.',
+      address: "123 Smith Street"
     ),
     Toilet(
       imageURL: 'https://static01.nyt.com/images/2022/12/28/multimedia/28restaurant-bathrooms2-1-8b25/22restaurant-bathrooms2-1-8b25-superJumbo.jpg?quality=75&auto=webp',
       rating: 3.5,
       location: 'Mall Restroom',
       review: 'Spacious but a bit crowded.',
+      address: "456 First Street"
+
     ),
+    Toilet(
+      imageURL: 'https://patch.com/img/cdn20/users/23562214/20200921/043805/styles/patch_image/public/midtown-bathrooms-open-patch___21162336727.jpg',
+      rating: 4.9,
+      location: "Bryant Park",
+      review: "Super clean and friendly staff.",
+      address: '58 W 42nd St'
+    ),
+    Toilet(
+      imageURL: 'https://static01.nyt.com/images/2020/02/14/nyregion/14nybathroom-print2/merlin_168076509_ba426d53-1f55-4fe6-8d8f-271b757f7fbd-superJumbo.jpg',
+      rating: 4.9,
+      location: "Greeley Square",
+      review: "Gleaming toilet seats with music, full-time attendant",
+      address: 'Between 32nd and 33rd Streets, Broadway and, 6th Ave'
+    )
     // Add more toilets here
   ];
 }
